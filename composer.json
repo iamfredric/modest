@@ -1,0 +1,26 @@
+{
+    "name": "iamfredric/modest",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fredric Lovefors",
+            "email": "mr@iamfredric.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Wordpriest\\Modest\\": "src/"
+        }
+    },
+    "require": {
+        "tightenco/collect": "^5.4",
+        "nesbot/carbon": "^1.22"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    }
+}
