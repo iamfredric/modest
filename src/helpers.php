@@ -16,7 +16,7 @@ if (! function_exists('snake_to_camel')) {
 
 if (! function_exists('content_to_excerpt')) {
     function content_to_excerpt($string, $length) {
-        $string = mb_substr(strip_tags($content), 0, $length);
+        $string = mb_substr(strip_tags($string), 0, $length);
 
         if (strlen($string) > $length) {
             return "{$string}...";
