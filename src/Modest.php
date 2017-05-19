@@ -5,6 +5,7 @@ namespace Wordpriest\Modest;
 use ArrayAccess;
 use Carbon\Carbon;
 use JsonSerializable;
+use ReflectionClass;
 
 abstract class Modest implements ArrayAccess, JsonSerializable
 {
@@ -211,7 +212,9 @@ abstract class Modest implements ArrayAccess, JsonSerializable
             return $this->type;
         }
 
-        return camel_to_dash(get_class($this));
+        $reflection = new ReflectionClass($this);
+
+        return camel_to_dash($reflection->getShortName());
     }
 
     /**
