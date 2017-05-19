@@ -118,12 +118,18 @@ abstract class Modest implements ArrayAccess, JsonSerializable
     /**
      * Updates given post in database
      *
-     * @param  array  $params
+     * @param  array  $args
      *
      * @return Modest
      */
-    public function update(array $params)
+    public function update(array $args)
     {
+        $params = [];
+
+        foreach ($args as $key => $value) {
+            $params[$this->translateAttributeKeyToWordpress($key)] = $value;
+        }
+
         $params['ID'] = $this->id;
 
         return self::create($params);
@@ -389,6 +395,15 @@ abstract class Modest implements ArrayAccess, JsonSerializable
     public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+    /**
+     * @param $method
+     * @param $value
+     */
+    public function __set($method, $value)
+    {
+        return $this->attributes[$method] = $value;
     }
 
     /**

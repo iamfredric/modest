@@ -65,8 +65,10 @@ class PostAttributesTest extends TestCase
     /** @test */
     public function it_can_change_attributes_values()
     {
-        $this->post->title = 'Updated title';
+        $post = Post::make(new WP_Post);
 
-        $this->assertEquals($this->post->title, 'Updated title');
+        $post->title = 'Updated title';
+
+        $this->assertEquals($post->title, 'Updated title');
     }
 }
