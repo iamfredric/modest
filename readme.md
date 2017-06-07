@@ -104,16 +104,4 @@ $posts = Post::all();
 
 $posts = Post::whereTitle('Value')->get();
 $posts->where('title', '!=', 'Value')->get();
-...
 ```
-Post::make(get_post());
-Post::current();
-Post::find(id);
-
-post::update();
-Post::create();
-Post::where(...)
-Post::whereSomething()...->get()...->first()...paginate()
-
-$post = Post::find(1)
-$post->title;...id.........
