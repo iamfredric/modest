@@ -25,4 +25,3 @@ if (! function_exists('content_to_excerpt')) {
         return $string;
     }
 }
-

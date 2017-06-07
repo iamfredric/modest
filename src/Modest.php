@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use JsonSerializable;
 use ReflectionClass;
 
-abstract class Modest implements ArrayAccess, JsonSerializable
+class Modest implements ArrayAccess, JsonSerializable
 {
     /**
      * Specified post type
@@ -88,14 +88,15 @@ abstract class Modest implements ArrayAccess, JsonSerializable
      */
     public static function find($id)
     {
-        $instance = new static;
+        return QueryBuilder::find($id, new static);
+    }
 
-        return self::make(
-            get_post([
-                'id' => $id,
-                'post_type' => $instance->getType()
-            ])
-        );
+    /**
+     * @return mixed
+     */
+    public static function all()
+    {
+        return QueryBuilder::all(new static);
     }
 
     /**
@@ -421,5 +422,18 @@ abstract class Modest implements ArrayAccess, JsonSerializable
         }
 
         return $this->get($method);
+    }
+
+    /**
+     * @param $method
+     * @param $args
+     *
+     * @return \Wordpriest\Modest\QueryBuilder
+     */
+    public static function __callStatic($method, $args)
+    {
+        $instance = new static;
+
+        return (new QueryBuilder($instance))->__call($method, $args);
     }
 }

@@ -1,9 +1,19 @@
 <?php
 
-require 'vendor/autoload.php';
-
 function get_post() {
     return new WP_Post;
+}
+
+function get_posts($args) {
+    $limit = isset($args['posts_per_page']) ? $args['posts_per_page'] : 3;
+
+    $posts = [];
+
+    foreach (range(1, $limit) as $index) {
+        $posts[] = new WP_Post;
+    }
+
+    return $posts;
 }
 
 function wp_insert_post() {
