@@ -72,11 +72,7 @@ class Modest implements ArrayAccess, JsonSerializable
      */
     public static function current()
     {
-        $instance = new static;
-
-        return self::make(get_post([
-            'post_type' => $instance->getType()
-        ]));
+        return self::make(get_post());
     }
 
     /**
