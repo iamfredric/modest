@@ -240,7 +240,7 @@ class Modest implements ArrayAccess, JsonSerializable
             return $value;
         }
 
-        return \Carbon\Carbon::create(strtotime($value));
+        return \Carbon\Carbon::createFromTimestamp(strtotime($value));
     }
 
     /**
