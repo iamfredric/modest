@@ -64,10 +64,7 @@ class QueryBuilder
     {
         $instance = new static($model);
 
-        $instance->arguments = [];
-        $instance->setArgument('id', $id);
-
-        return $instance->first();
+        return $instance->buildItem(get_post($id));
     }
 
     /**
@@ -84,6 +81,27 @@ class QueryBuilder
         }
 
         return $posts;
+    }
+
+    /**
+     * Paginates results
+     *
+     * @param  integere $limit
+     *
+     * @return Paginator
+     */
+    public function paginate($limit = null)
+    {
+        $posts = [];
+
+        $this->setArgument('posts_per_page', $limit);
+        $this->setArgument('paged', get_query_var('paged') ?: 1);
+
+        foreach ((array) get_posts($this->getArguments()) as $post) {
+            $posts[] = $this->buildItem($post);
+        }
+
+        return new Pagination($posts);
     }
 
     protected function buildItem($post)

@@ -88,6 +88,18 @@ class Modest implements ArrayAccess, JsonSerializable
     }
 
     /**
+     * Paginated results
+     *
+     * @param  integer $limit
+     *
+     * @return QueryBuilder
+     */
+    public static function paginate($limit = null)
+    {
+        return (new QueryBuilder(new static))->paginate($limit);
+    }
+
+    /**
      * @return mixed
      */
     public static function all()
