@@ -104,6 +104,13 @@ class QueryBuilder
         return new Pagination($posts);
     }
 
+    public function limit($limit)
+    {
+        $this->setArgument('posts_per_page', $limit);
+
+        return $this;
+    }
+
     protected function buildItem($post)
     {
         if ($this->model) {
@@ -209,6 +216,10 @@ class QueryBuilder
 
         if ($key == 'meta') {
             return $this->buildMetaWhere($args);
+        }
+
+        if ($key == 'limit') {
+            return $this->limit($args[0]);
         }
 
         return $this->buildWhere($key, $value);
