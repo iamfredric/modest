@@ -50,6 +50,11 @@ class Modest implements ArrayAccess, JsonSerializable
     protected $attributes;
 
     /**
+     * @var null|string
+     */
+    protected $url;
+
+    /**
      * Create a new instance
      *
      * @param  \WP_Post $post
@@ -194,6 +199,18 @@ class Modest implements ArrayAccess, JsonSerializable
     public function getExcerptAttribute($excerpt)
     {
         return $excerpt ?: content_to_excerpt($this->content, $this->excerptLength);
+    }
+
+    /**
+     * Url attribute getter
+     *
+     * @param  null $url
+     *
+     * @return string
+     */
+    public function getUrlAttribute($url = null)
+    {
+        return $this->url ?: $this->url = get_permalink($this->id);
     }
 
     /**

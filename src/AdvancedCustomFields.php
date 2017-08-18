@@ -16,7 +16,7 @@ trait AdvancedCustomFields
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getFieldsAttribute($fields)
+    public function getFieldsAttribute($fields = null)
     {
         if (count($this->fields)) {
             return $this->fields;
