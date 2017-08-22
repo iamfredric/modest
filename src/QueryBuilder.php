@@ -11,7 +11,9 @@ class QueryBuilder
      *
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments = [
+        'suppress_filters' => false
+    ];
 
     /**
      * Meta query arguments
@@ -96,12 +98,13 @@ class QueryBuilder
 
         $this->setArgument('posts_per_page', $limit);
         $this->setArgument('paged', get_query_var('paged') ?: 1);
+        $query = new \WP_Query($this->getArguments());
 
-        foreach ((array) get_posts($this->getArguments()) as $post) {
+        foreach ((array) $query->get_posts() as $post) {
             $posts[] = $this->buildItem($post);
         }
 
-        return new Pagination($posts);
+        return new Pagination($posts, $query);
     }
 
     public function limit($limit)
@@ -194,9 +197,9 @@ class QueryBuilder
         $value = count($args) == 3 ? $args[2] : $args[1];
 
         $this->metaArguments[] = [
-            'meta_key' => $key,
-            'meta_value' => $value,
-            'meta_compare' => $compare
+            'key' => $key,
+            'value' => $value,
+            'compare' => $compare
         ];
 
         return $this;

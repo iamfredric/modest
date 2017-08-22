@@ -8,14 +8,20 @@ class Pagination implements \ArrayAccess, \JsonSerializable
 {
     public $items;
 
-    public function __construct($items)
+    protected $query;
+
+    public function __construct($items, $query)
     {
         $this->items = $items;
+        $this->query = $query;
     }
 
     public function paginate($args = [])
     {
-        return paginate_links($args);
+        return paginate_links(array_merge([
+            'total'              => $this->query->max_num_pages,
+            'current'            => get_query_var('paged') ?: 1
+        ], $args));
     }
 
     public function toArray()
