@@ -5,11 +5,6 @@ namespace Wordpriest\Modest;
 trait AdvancedCustomFields
 {
     /**
-     * @var array
-     */
-    protected $fields = [];
-
-    /**
      * Advanced custom fields getter
      *
      * @param  null $fields
@@ -18,10 +13,10 @@ trait AdvancedCustomFields
      */
     public function getFieldsAttribute($fields = null)
     {
-        if (count($this->fields)) {
-            return $this->fields;
+        if (! $this->attributes->has('fields')) {
+            $this->attributes->put('fields', collect(get_fields($this->id)));
         }
 
-        return $this->fields = collect(get_fields($this->id));
+        return $this->attributes->get('fields');
     }
 }
