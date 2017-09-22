@@ -24,6 +24,26 @@ class Pagination implements \ArrayAccess, \JsonSerializable
         ], $args));
     }
 
+    public function prev($label = 'Next')
+    {
+        return get_previous_posts_link($label);
+    }
+
+    public function next($label = 'Next')
+    {
+        return get_next_posts_link($label);
+    }
+
+    public function currentPage()
+    {
+        return get_query_var('paged') ?: 1;
+    }
+
+    public function maxPage()
+    {
+        return $this->query->max_num_pages;
+    }
+
     public function toArray()
     {
         return $this->items;
