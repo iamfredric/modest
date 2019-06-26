@@ -50,9 +50,11 @@ class QueryBuilder
     {
         $this->setArgument('posts_per_page', 1);
 
-        $posts = get_posts($this->getArguments());
+        if ($posts = get_posts($this->getArguments())) {
+            return $this->buildItem($posts[0]);
+        }
 
-        return $this->buildItem($posts[0]);
+        return null;
     }
 
     /**
