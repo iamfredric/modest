@@ -4,7 +4,7 @@ namespace Wordpriest\Modest;
 
 use Incognito\Components\Components as ComponentsBundler;
 
-class Components
+trait Components
 {
     /**
      * @param $components
@@ -13,11 +13,7 @@ class Components
      */
     public function getComponentsAttribute($components)
     {
-        if (! $this->attributes->has('components')) {
-            $this->attributes->put('components', new ComponentsBundler($this->fields->get('components')));
-        }
-
-        return $this->attributes->get('components');
+        return $this->components('components');
     }
 
     /**
@@ -25,12 +21,12 @@ class Components
      *
      * @return \Incognito\Components\Components
      */
-    public function components($prefix = null)
+    public function components($fieldname = 'components', $prefix = null)
     {
         $key = $prefix ? "{$prefix}-components" : 'components';
 
         if (! $this->attributes->has($key)) {
-            $this->attributes->put($key, new ComponentsBundler($this->fields->get('components'), $prefix));
+            $this->attributes->put($key, new ComponentsBundler($this->fields->get($fieldname), $prefix));
         }
 
         return $this->attributes->get($key);
